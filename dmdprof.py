@@ -49,6 +49,7 @@ def dmdprof_get_stack():
                         if loc is not None and loc != oldloc:
                             stack.append(loc)
                             oldloc = loc
+                            break # Consider just the first argument with a Loc
             block = block.superblock
         frame = frame.older()
     return tuple(stack)
