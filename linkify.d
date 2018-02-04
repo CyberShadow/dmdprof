@@ -32,14 +32,17 @@ void main(string[] args)
 			if (auto p = fn.matchFirst(re!`/phobos/`))
 			{
 				fn = p.post;
-				url = "https://github.com/dlang/phobos/blob/" ~ phobosVer ~ "/" ~ fn ~ "#L" ~ lineNumber.text;
+				url = "https://github.com/dlang/phobos/blob/" ~ phobosVer ~ "/" ~ fn;
 			}
 			else
 			if (auto p = fn.matchFirst(re!`/druntime/(src|import)/`))
 			{
 				fn = p.post;
-				url = "https://github.com/dlang/druntime/blob/" ~ druntimeVer ~ "/src/" ~ fn ~ "#L" ~ lineNumber.text;
+				url = "https://github.com/dlang/druntime/blob/" ~ druntimeVer ~ "/src/" ~ fn;
 			}
+
+			if (url && lineNumber)
+				url ~= "#L" ~ lineNumber.text;
 
 			line = m.pre;
 			line ~= ", label=" ~ ([fn.idup] ~ label[1..$]).join("\n").toDotStr();
