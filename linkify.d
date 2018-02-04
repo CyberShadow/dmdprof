@@ -1,4 +1,6 @@
 import std.algorithm.searching;
+import std.conv;
+import std.file;
 import std.getopt;
 import std.json;
 import std.regex;
@@ -13,26 +15,51 @@ void main(string[] args)
 		"druntime", "Druntime version in URLs", &druntimeVer,
 	);
 
-	auto r = regex(`, label=("[^"]*")];$`);
 	foreach (line; stdin.byLine)
 	{
-		if (auto m = line.matchFirst(r))
+		if (auto m = line.matchFirst(re!`, label=("[^"]*")];$`))
 		{
-			auto label = m[1].parseJSON.str.splitLines();
-			auto fn = label[0];
-			auto lineNumber = label[1].findSplit(":")[0];
-			string url = null;
-			if (fn == "object.d" || fn.startsWith("core/"))
-				url = "https://github.com/dlang/druntime/blob/src/" ~ druntimeVer ~ "/" ~ fn ~ "#L" ~ lineNumber;
-			else
-			if (fn.startsWith("std/") || fn.startsWith("etc/"))
-				url = "https://github.com/dlang/phobos/blob/" ~ phobosVer ~ "/" ~ fn ~ "#L" ~ lineNumber;
-			if (url)
+			auto label = m[1].parseDotStr.splitLines();
+			const(char)[] fn = label[0];
+			auto lineNumber = label[1].findSplit(":")[0].to!int;
+
+			string tooltip = null;
+			if (fn.exists && lineNumber)
+				tooltip = fn.readText.splitLines[lineNumber - 1];
+
+			const(char)[] url = null;
+
+			if (auto p = fn.matchFirst(re!`/phobos/`))
 			{
-				auto j = JSONValue(url);
-				line = line[0..$-2] ~ ", URL=" ~ toJSON(j, false, JSONOptions.doNotEscapeSlashes ) ~ "];";
+				fn = p.post;
+				url = "https://github.com/dlang/phobos/blob/" ~ phobosVer ~ "/" ~ fn ~ "#L" ~ lineNumber.text;
 			}
+			else
+			if (auto p = fn.matchFirst(re!`/druntime/(src|import)/`))
+			{
+				fn = p.post;
+				url = "https://github.com/dlang/druntime/blob/" ~ druntimeVer ~ "/src/" ~ fn ~ "#L" ~ lineNumber.text;
+			}
+
+			line = m.pre;
+			line ~= ", label=" ~ ([fn.idup] ~ label[1..$]).join("\n").toDotStr();
+			if (url)
+				line ~= ", URL=" ~ url.toDotStr;
+			if (tooltip)
+				line ~= ", tooltip=" ~ tooltip.toDotStr;
+			line ~= "];";
 		}
 		writeln(line);
 	}
+}
+
+string parseDotStr(in char[] s) { return s.parseJSON.str; }
+string toDotStr(in char[] s) { auto j = JSONValue(s); return toJSON(j, false, JSONOptions.doNotEscapeSlashes); }
+
+Regex!char re(string pattern, alias flags = [])()
+{
+	static Regex!char r;
+	if (r.empty)
+		r = regex(pattern, flags);
+	return r;
 }
