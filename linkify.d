@@ -26,6 +26,8 @@ void main(string[] args)
 			string tooltip = null;
 			if (fn.exists && lineNumber)
 				tooltip = fn.readText.splitLines[lineNumber - 1];
+			if (!lineNumber)
+				label[1] = "(module)";
 
 			const(char)[] url = null;
 
