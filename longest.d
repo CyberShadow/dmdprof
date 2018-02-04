@@ -1,6 +1,8 @@
+import std.algorithm.iteration;
 import std.algorithm.searching;
 import std.conv;
 import std.file : readText, exists;
+import std.range.primitives;
 import std.stdio;
 import std.string;
 
@@ -10,7 +12,7 @@ import ae.utils.funopt;
 import ae.utils.json;
 import ae.utils.main;
 
-void longest(string profileJson)
+void longest(string profileJson, bool countModules)
 {
 	@JSONPartial
 	struct Profile
@@ -31,12 +33,23 @@ void longest(string profileJson)
 	}
 
 	Profile profile = profileJson.readText.jsonParse!Profile;
-	int[] longestCallchain;
+	int[] bestCallchain; size_t bestLength;
 	foreach (event; profile.events)
-		if (longestCallchain.length < event.callchain.length)
-			longestCallchain = event.callchain;
+	{
+		size_t length;
+		if (countModules)
+			length = event.callchain.map!(f => profile.functions[f].fileName).uniq.walkLength;
+		else
+			length = event.callchain.length;
 
-	foreach (f; longestCallchain)
+		if (bestLength < length)
+		{
+			bestCallchain = event.callchain;
+			bestLength = length;
+		}
+	}
+
+	foreach (f; bestCallchain)
 	{
 		auto fn = profile.functions[f].fileName;
 		write(fn);
