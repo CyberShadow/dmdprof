@@ -10,22 +10,33 @@ import re
 
 
 def dmdprof_get_loc(val):
-    if (val.type.code == gdb.TYPE_CODE_PTR and
-        val.type.target().name is not None and (
-            val.type.target().name.endswith("Statement") or
-            val.type.target().name.endswith("Expression"))):
+    if (val.type.code == gdb.TYPE_CODE_PTR
+        and val.type.target().name is not None
+        and val.type.target().name != "void"
+    ):
         return dmdprof_get_loc(val.referenced_value())
     if val.type.name is None:
         return None
-    if val.type.name.endswith("Statement"):
-        return val.cast(gdb.lookup_type("dmd.statement.Statement"))["loc"]
-    if val.type.name.endswith("Expression"):
-        return val.cast(gdb.lookup_type("dmd.expression.Expression"))["loc"]
+
+    # Modules
+    try:
+        fn = val["srcfile"]["name"]["str"].string()
+        return (fn, 0, 0)
+    except:
+        pass
+
+    # Symbols, statements, declarations, and expressions
+    try:
+        loc = val["loc"]
+        return (loc["filename"].string("utf-8"), int(loc["linnum"]), int(loc["charnum"]))
+    except:
+        pass
+
     return None
 
 
 def dmdprof_get_stack():
-    oldloctup = ()
+    oldloc = ()
     stack = []
     frame = gdb.newest_frame()
     while frame:
@@ -35,17 +46,9 @@ def dmdprof_get_stack():
                 for symbol in block:
                     if symbol.is_argument:
                         loc = dmdprof_get_loc(symbol.value(frame))
-                        if loc is not None:
-                            try:
-                                filename = loc["filename"].string("utf-8")
-                                line = int(loc["linnum"])
-                                char = int(loc["charnum"])
-                                loctup = (filename, line, char)
-                                if loctup != oldloctup:
-                                    stack.append(loctup)
-                                    oldloctup = loctup
-                            except (gdb.MemoryError, UnicodeDecodeError):
-                                pass
+                        if loc is not None and loc != oldloc:
+                            stack.append(loc)
+                            oldloc = loc
             block = block.superblock
         frame = frame.older()
     return tuple(stack)
@@ -56,7 +59,7 @@ def dmdprof_print_stack():
     for loc in stack:
         (filename, line, char) = loc
         locstr = "{}({},{})".format(filename, line, char)
-        if os.path.exists(filename):
+        if line > 0 and os.path.exists(filename):
             linestr = open(filename).readlines()[line-1]
             locstr += ": " + linestr.rstrip('\n')
         print(locstr)
