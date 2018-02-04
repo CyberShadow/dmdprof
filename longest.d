@@ -12,7 +12,7 @@ import ae.utils.funopt;
 import ae.utils.json;
 import ae.utils.main;
 
-void longest(string profileJson, bool countModules)
+void longest(string profileJson, bool countModules, string including = null)
 {
 	@JSONPartial
 	struct Profile
@@ -34,8 +34,21 @@ void longest(string profileJson, bool countModules)
 
 	Profile profile = profileJson.readText.jsonParse!Profile;
 	int[] bestCallchain; size_t bestLength;
+
 	foreach (event; profile.events)
 	{
+		bool ok;
+		if (including)
+		{
+			foreach (f; event.callchain)
+				if (profile.functions[f].fileName.canFind(including))
+					ok = true;
+		}
+		else
+			ok = true;
+		if (!ok)
+			continue;
+
 		size_t length;
 		if (countModules)
 			length = event.callchain.map!(f => profile.functions[f].fileName).uniq.walkLength;
