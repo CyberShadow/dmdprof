@@ -12,7 +12,7 @@ Direct quote from a colleague (after a long day of bisecting a regression in Cla
 
 Indeed, a clean build of DMD itself (about 170'000 lines of D and 120'000 lines of C/C++) takes no longer than 4 seconds to build on a rather average developer machine.
 
-Walter bright has [long](https://forum.dlang.org/search?q=group:digitalmarsD%20author:Walter%20author:Bright%20content:profiler) touted the importance of using profilers.
+Walter Bright has [long](https://forum.dlang.org/search?q=group:digitalmarsD%20author:Walter%20author:Bright%20content:profiler) touted the importance of using profilers.
 Though we have plenty of the kind that instrument or [sample](https://github.com/VerySleepy/verysleepy) the program being profiled, 
 including [two in DMD itself](https://dlang.org/dmd-linux.html#switch-profile),
 there aren't as many of the kind that allow profiling the input data, i.e. D programs being compiled.
