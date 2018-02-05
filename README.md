@@ -30,11 +30,11 @@ Usage
 
 4. Run the profiler:
 
-       (gdb) python dmdprof_profile()
+       (gdb) python DMDProfiler().profile()
 
    You can optionally specify a sampling interval:
 
-       (gdb) python dmdprof_profile(0.001)
+       (gdb) python DMDProfiler(0.001).profile()
 
    The sampling interval specifies the duration (in seconds) between samples taken. The default is 0.01, and the lowest possible value is 0, meaning to take samples as quickly as possible.
 

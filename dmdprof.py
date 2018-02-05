@@ -75,7 +75,10 @@ class Executor:
 
 
 class DMDProfiler:
-    def __init__(self, period, output_filename, quit_on_exit):
+    def __init__(self,
+                 period = 0.01,
+                 output_filename = "profile.json",
+                 quit_on_exit = False):
         self.period = period
         self.output_filename = output_filename
         self.quit_on_exit = quit_on_exit
@@ -161,11 +164,3 @@ class DMDProfiler:
         gdb.events.stop.connect(self.stop_handler)
         gdb.events.exited.connect(self.exit_handler)
         gdb.post_event(Executor("continue"))
-
-def dmdprof_profile(period = 0.01, filename = "profile.json", quit_on_exit = False):
-    prof = DMDProfiler(
-        period = period,
-        output_filename = filename,
-        quit_on_exit = quit_on_exit,
-    )
-    prof.profile()
