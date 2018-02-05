@@ -40,11 +40,15 @@ Well, putting theory to practice with
 [a bit of GDB Python scripting](https://github.com/CyberShadow/dmdprof/blob/master/dmdprof.py),
 [a dash of postprocessing](https://github.com/CyberShadow/dmdprof/blob/master/linkify.d),
 [a healthy dose of visualization](https://github.com/jrfonseca/gprof2dot/),
-and some obligatory GraphViz, we get something actually usable.
+and some obligatory GraphViz, we get something actually usable:
 
 <p align="center"><a href="profile.svg"><img src="profile_thumb3.svg"></a></p>
 
 Click the above image to see the full graph, and to get hover tooltips and clickable hyperlinks.
+
+Following the links is entertaining in seeing how Phobos modules interact
+and [how deep some of these interactions go](https://github.com/dlang/phobos/pull/5916#issuecomment-362896993),
+but also allows quickly identifying [immediately actionable improvements](https://github.com/dlang/phobos/pull/6122).
 
 Source code and detailed usage instructions can be found on the GitHub repository:  
 https://github.com/CyberShadow/dmdprof
