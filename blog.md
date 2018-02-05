@@ -20,9 +20,26 @@ but specialized tools are generally much more effective.
 
 One such tool is [DBuildStat](https://github.com/CyberShadow/DBuildStat), which enumerates the list of modules used in a program,
 and then proceeds to collect various metrics about their compilation time.
-The subject came up recently in the discussion of Phobos pull request #5916, "[Add a global convenience package file](https://github.com/dlang/phobos/pull/5916)"; a curious outlier was `std.net.curl`, which took an entire 40 milliseconds to import:
+The subject came up recently in the discussion of Phobos pull request #5916, "[Add a global convenience package file](https://github.com/dlang/phobos/pull/5916)";
+a curious outlier was `std.net.curl`, which took an entire 40 milliseconds to import:
 
 <p align="center"><a href="scripting.svg"><img src="scripting.png"></a></p>
 
-Though DBuildStat provided useful insight on a larger scale, it did not answer the question: yes, but *why* does `std.net.curl` take an entire 40 milliseconds to import?
+Though DBuildStat provided useful insight on a larger scale, it did not answer the question:
+yes, but *why* does `std.net.curl` take an entire 40 milliseconds to import?
 
+In theory, we could do something like this:
+
+- Start compiling the D code;
+- Stop the compiler at an arbitrary point;
+- Look at its stack trace and see what code it was compiling at that time;
+- Resume the compilation;
+- Repeat the steps above until a satisfactory number of samples has been gathered.
+
+Well, putting theory to practice with
+[a bit of GDB Python scripting](https://github.com/CyberShadow/dmdprof/blob/master/dmdprof.py),
+[a dash of postprocessing](https://github.com/CyberShadow/dmdprof/blob/master/linkify.d),
+[a healthy dose of visualization](https://github.com/jrfonseca/gprof2dot/),
+and some obligatory GraphViz, we get something actually usable.
+
+![](profile.svg)
