@@ -14,7 +14,7 @@ Indeed, a clean build of DMD itself (about 170'000 lines of D and 120'000 lines 
 
 Walter bright has [long](https://forum.dlang.org/search?q=group:digitalmarsD%20author:Walter%20author:Bright%20content:profiler) touted the importance of using profilers.
 Though we have plenty of the kind that instrument or [sample](https://github.com/VerySleepy/verysleepy) the program being profiled, 
-including [one in DMD itself](https://dlang.org/dmd-linux.html#switch-profile), there aren't as many of the kind that allow profiling the input data, i.e. D programs.
+including [two in DMD itself](https://dlang.org/dmd-linux.html#switch-profile), there aren't as many of the kind that allow profiling the input data, i.e. D programs.
 Generic tools of [reducing input data sets according to some condition](https://github.com/CyberShadow/DustMite) are theoretically applicable, 
 but specialized tools are generally much more effective.
 
