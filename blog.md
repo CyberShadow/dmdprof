@@ -50,5 +50,7 @@ Following the links is entertaining in seeing how Phobos modules interact
 and [how deep some of these interactions go](https://github.com/dlang/phobos/pull/5916#issuecomment-362896993),
 but also allows quickly identifying [immediately actionable improvements](https://github.com/dlang/phobos/pull/6122).
 
+Hopefully, the tool will come in useful to D users as well as D developers in the future.
+
 Source code and detailed usage instructions can be found on the GitHub repository:  
 https://github.com/CyberShadow/dmdprof
