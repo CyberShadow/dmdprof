@@ -24,13 +24,19 @@ void main(string[] args)
 			auto lineNumber = label[1].findSplit(":")[0].to!int;
 
 			string tooltip = null;
-			if (fn.exists && lineNumber)
+			if (lineNumber > 0 && fn.exists)
 				tooltip = fn.readText.splitLines[lineNumber - 1];
-			if (!lineNumber)
+			if (lineNumber == 0)
 				label[1] = "(module)";
+			else
+			if (lineNumber == -1)
+				label = label[0] ~ label[2..$];
 
 			const(char)[] url = null;
 
+			if (lineNumber == -1)
+				fn = "DMD: " ~ fn;
+			else
 			if (auto p = fn.matchFirst(re!`/phobos/`))
 			{
 				fn = p.post;

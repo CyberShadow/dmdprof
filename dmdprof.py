@@ -39,6 +39,7 @@ def dmdprof_get_stack():
     oldloc = ()
     stack = []
     frame = gdb.newest_frame()
+    last_frame = frame
     while frame:
         block = frame.block()
         while block:
@@ -49,9 +50,19 @@ def dmdprof_get_stack():
                         if loc is not None and loc != oldloc:
                             stack.append(loc)
                             oldloc = loc
+                            last_frame = frame
                             break # Consider just the first argument with a Loc
             block = block.superblock
         frame = frame.older()
+
+    frame = last_frame
+    while frame:
+        name = frame.name()
+        name = re.sub(r"\(.*", "", name)
+        if name != "Module::accept" and name != "dmd.mars.tryMain":
+            stack.append((name, -1, -1))
+        frame = frame.older()
+
     return tuple(stack)
 
 
