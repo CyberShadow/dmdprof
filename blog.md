@@ -22,7 +22,7 @@ One such tool is [DBuildStat](https://github.com/CyberShadow/DBuildStat), which 
 and then proceeds to collect various metrics about their compilation time.
 The subject came up recently in the discussion of Phobos pull request #5916, "[Add a global convenience package file](https://github.com/dlang/phobos/pull/5916)"; a curious outlier was `std.net.curl`, which took an entire 40 milliseconds to import:
 
-[<img align="center" src="scripting.png">](scripting.svg)
+<p align="center">[![DBuildStat](scripting.png)](scripting.svg)</p>
 
 Though DBuildStat provided useful insight on a larger scale, it did not answer the question: yes, but *why* does `std.net.curl` take an entire 40 milliseconds to import?
 
