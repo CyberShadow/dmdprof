@@ -42,7 +42,7 @@ Well, putting theory to practice with
 [a healthy dose of visualization](https://github.com/jrfonseca/gprof2dot/),
 and some obligatory GraphViz, we get something actually usable.
 
-<p align="center"><a href="profile.svg"><img src="profile.png"></a></p>
+<p align="center"><a href="profile.svg"><img src="profile_thumb.svg"></a></p>
 
 Click the above image to see the full graph, and to get hover tooltips and clickable hyperlinks.
 
