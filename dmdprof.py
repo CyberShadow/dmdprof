@@ -75,9 +75,10 @@ class Executor:
 
 
 class DMDProfiler:
-    def __init__(self, period, output_filename):
+    def __init__(self, period, output_filename, quit_on_exit):
         self.period = period
         self.output_filename = output_filename
+        self.quit_on_exit = quit_on_exit
 
     def stop_func(self):
         try:
@@ -108,6 +109,8 @@ class DMDProfiler:
 
         print("\nProfiling complete with %d samples." % len(self.callchains))
         self.save_results()
+        if self.quit_on_exit:
+            gdb.execute("quit")
 
     def save_results(self):
         """Save results as gprof2dot JSON format."""
@@ -159,6 +162,10 @@ class DMDProfiler:
         gdb.events.exited.connect(self.exit_handler)
         gdb.post_event(Executor("continue"))
 
-def dmdprof_profile(period = 0.01, filename = "profile.json"):
-    prof = DMDProfiler(period, filename)
+def dmdprof_profile(period = 0.01, filename = "profile.json", quit_on_exit = False):
+    prof = DMDProfiler(
+        period = period,
+        output_filename = filename,
+        quit_on_exit = quit_on_exit,
+    )
     prof.profile()
