@@ -29,11 +29,14 @@ void main(string[] args)
 			if (lineNumber == 0)
 				label[1] = "(module)";
 			else
-			if (lineNumber == -1)
+			if (lineNumber < 0)
 				label = label[0] ~ label[2..$];
 
 			const(char)[] url = null;
 
+			if (lineNumber == -2)
+				fn = "DMD root";
+			else
 			if (lineNumber == -1)
 				fn = "DMD: " ~ fn;
 			else
@@ -49,7 +52,7 @@ void main(string[] args)
 				url = "https://github.com/dlang/druntime/blob/" ~ druntimeVer ~ "/src/" ~ fn;
 			}
 
-			if (url && lineNumber)
+			if (url && lineNumber > 0)
 				url ~= "#L" ~ lineNumber.text;
 
 			line = m.pre;

@@ -59,7 +59,11 @@ def dmdprof_get_stack():
     while frame:
         name = frame.name()
         name = re.sub(r"\(.*", "", name)
-        if name != "Module::accept" and name != "dmd.mars.tryMain":
+        if name == "Module::accept" or name == "dmd.mars.tryMain":
+            pass
+        elif name == "D main":
+            stack.append((name, -2, -2))
+        else:
             stack.append((name, -1, -1))
         frame = frame.older()
 

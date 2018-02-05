@@ -44,8 +44,8 @@ Usage
 
 5. Use [gprof2dot](https://github.com/jrfonseca/gprof2dot/) to generate a GraphViz .dot file, pipe it through the `linkify` program in this repository, and pipe the result into `dot`:
 
-       ./gprof2dot.py -f json path/to/profile.json -n 2 -e 2 | rdmd path/to/linkify.d | dot -Tsvg > profile.svg
+       ./gprof2dot.py -f json path/to/profile.json --root=-2:-2 -n 2 -e 0 | rdmd path/to/linkify.d | dot -Tsvg > profile.svg
 
-   Adjust gprof2dot `-n` and `-e` parameters to taste.
+   Adjust gprof2dot `-n` parameter to taste.
 
    To generate correct, permanent links in the output file, you can specify Phobos and Druntime versions as Git commit SHA1s or tag names using the `--phobos` and `--druntime` arguments to `linkify`.
