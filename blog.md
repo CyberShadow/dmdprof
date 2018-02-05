@@ -54,3 +54,5 @@ Hopefully, the tool will come in useful to D users as well as D developers in th
 
 Source code and detailed usage instructions can be found on the GitHub repository:  
 https://github.com/CyberShadow/dmdprof
+
+Thanks to Sebastian Wilzbach for his work on related topics, and to José Fonseca for the gprof2dot tool used for visualization.
