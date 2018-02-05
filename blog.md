@@ -1,7 +1,7 @@
 DMDProf
 =======
 
-Compilation time is pretty interesting to D programmers.
+Compilation time is rather interesting to D programmers.
 Walter Bright [designed](https://forum.dlang.org/post/hptdvo$kem$1@digitalmars.com) the language (among other things) to compile quickly 
 (especially [compared to C++](http://www.drdobbs.com/cpp/c-compilation-speed/228701711)), 
 and DMD, the reference D compiler implementation, is itself quite optimized.
@@ -17,4 +17,11 @@ Though we have plenty of the kind that instrument or [sample](https://github.com
 including [one in DMD itself](https://dlang.org/dmd-linux.html#switch-profile), there aren't as many of the kind that allow profiling the input data, i.e. D programs.
 Generic tools of [reducing input data sets according to some condition](https://github.com/CyberShadow/DustMite) are theoretically applicable, 
 but specialized tools are generally much more effective.
+
+One such tool is [DBuildStat](https://github.com/CyberShadow/DBuildStat), which enumerates the list of modules used in a program,
+and then proceeds to collect various metrics about their compilation time.
+The subject came up recently in the discussion of Phobos pull request #5916, "[Add a global convenience package file](https://github.com/dlang/phobos/pull/5916)"; a curious outlier was `std.net.curl`, which took an entire 40 milliseconds to import:
+
+[![DBuildStat](scripting.png)](scripting.svg)
+
 
