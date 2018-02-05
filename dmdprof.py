@@ -20,7 +20,7 @@ def dmdprof_get_loc(val):
 
     # Modules
     try:
-        fn = val["srcfile"]["name"]["str"].string()
+        fn = val["srcfile"]["name"]["str"].string("utf-8")
         return (fn, 0, 0)
     except:
         pass
@@ -29,6 +29,13 @@ def dmdprof_get_loc(val):
     try:
         loc = val["loc"]
         return (loc["filename"].string("utf-8"), int(loc["linnum"]), int(loc["charnum"]))
+    except:
+        pass
+
+    # Backend elems
+    try:
+        srcpos = val["Esrcpos"]
+        return (srcpos["Sfilename"].string("utf-8"), int(srcpos["Slinnum"]), int(srcpos["Scharnum"]))
     except:
         pass
 
