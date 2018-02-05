@@ -32,7 +32,7 @@ In theory, we could do something like this:
 
 - Start compiling the D code;
 - Stop the compiler at an arbitrary point;
-- Look at its stack trace and see what code it was compiling at that time;
+- Look at its stack trace and make note of what code it was compiling at that time;
 - Resume the compilation;
 - Repeat the steps above until a satisfactory number of samples has been gathered.
 
