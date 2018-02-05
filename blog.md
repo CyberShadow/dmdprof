@@ -42,4 +42,9 @@ Well, putting theory to practice with
 [a healthy dose of visualization](https://github.com/jrfonseca/gprof2dot/),
 and some obligatory GraphViz, we get something actually usable.
 
-![](profile.svg)
+<p align="center"><a href="profile.svg"><img src="profile.png"></a></p>
+
+Click the above image to see the full graph, and to get hover tooltips and clickable hyperlinks.
+
+Source code and detailed usage instructions can be found on the GitHub repository:  
+https://github.com/CyberShadow/dmdprof
