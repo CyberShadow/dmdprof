@@ -49,6 +49,10 @@ and some obligatory GraphViz, we get something actually usable. Enter DMDProf:
 
 Click the above image to see the full graph, and to get hover tooltips and clickable hyperlinks.
 
+The data has hierarchy, meaning that we can see which modules import which (and at what cost), which code instantiates which templates, and how it all comes together.
+At the root, the profiler leaves some nodes from the DMD stack trace verbatim,
+so that we can see how much time each compilation stage uses, and what code is compiled in which stage.
+
 Following the links is entertaining in seeing how Phobos modules interact
 and [how deep some of these interactions go](https://github.com/dlang/phobos/pull/5916#issuecomment-362896993),
 but also allows quickly identifying [immediately actionable improvements](https://github.com/dlang/phobos/pull/6122).
