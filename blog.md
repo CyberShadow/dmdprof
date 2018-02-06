@@ -37,6 +37,8 @@ In theory, we could do something like this:
 - Resume the compilation;
 - Repeat the steps above until a satisfactory number of samples has been gathered.
 
+This way, we could get a picture of which parts of our D code take the longest to compile.
+
 Well, putting theory to practice with
 [a bit of GDB Python scripting](https://github.com/CyberShadow/dmdprof/blob/master/dmdprof.py),
 [a dash of postprocessing](https://github.com/CyberShadow/dmdprof/blob/master/linkify.d),
