@@ -41,7 +41,7 @@ Well, putting theory to practice with
 [a bit of GDB Python scripting](https://github.com/CyberShadow/dmdprof/blob/master/dmdprof.py),
 [a dash of postprocessing](https://github.com/CyberShadow/dmdprof/blob/master/linkify.d),
 [a healthy dose of visualization](https://github.com/jrfonseca/gprof2dot/),
-and some obligatory GraphViz, we get something actually usable:
+and some obligatory GraphViz, we get something actually usable. Enter DMDProf:
 
 <p align="center"><a href="profile.svg"><img src="profile_thumb3.svg"></a></p>
 
