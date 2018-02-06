@@ -1,5 +1,5 @@
-DMDProf
-=======
+Profiling compilation time
+==========================
 
 Compilation time is rather interesting to D programmers.
 Walter Bright [designed](https://forum.dlang.org/post/hptdvo$kem$1@digitalmars.com) the language (among other things) to compile quickly 
