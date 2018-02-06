@@ -48,7 +48,10 @@ def dmdprof_get_stack():
     frame = gdb.newest_frame()
     last_frame = frame
     while frame:
-        block = frame.block()
+        try:
+            block = frame.block()
+        except RuntimeError:
+            block = None
         while block:
             if not block.is_global:
                 for symbol in block:
