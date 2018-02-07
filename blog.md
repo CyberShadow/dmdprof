@@ -12,6 +12,9 @@ Direct quote from a colleague (after a long day of bisecting a regression in Cla
 > Whaaaaaaaaaaat? How can a compiler compile in 3 seconds?!?
 
 Indeed, a clean build of DMD itself (about 170'000 lines of D and 120'000 lines of C/C++) takes no longer than 4 seconds to build on a rather average developer machine.
+Code which takes advantage of more advanced language features, like string mixins and CTFE, compiles slower;
+on this subject, Dmitry Oslhansky is working on [CTFECache](https://github.com/dlang/dmd/pull/7239) for caching CTFE execution across compiler invocations, 
+and there's of course Stefan Koch's [new CTFE implementation](https://dlang.org/blog/2017/04/10/the-new-ctfe-engine/)
 
 Walter Bright has [long](https://forum.dlang.org/search?q=group:digitalmarsD%20author:Walter%20author:Bright%20content:profiler) touted the importance of using profilers.
 Though we have plenty of the kind that instrument or [sample](https://github.com/VerySleepy/verysleepy) the program being profiled, 
