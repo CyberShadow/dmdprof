@@ -1,5 +1,5 @@
-Profiling compilation time
-==========================
+Profiling DMD's Compilation Time
+================================
 
 Compilation time is [frequently linked](https://xkcd.com/303/) to productivity,
 and is of particular interest to D programmers.
