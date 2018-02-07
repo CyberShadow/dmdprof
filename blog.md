@@ -2,7 +2,7 @@ Profiling compilation time
 ==========================
 
 Compilation time is [frequently linked](https://xkcd.com/303/) to productivity,
-and is of particular interesting to D programmers.
+and is of particular interest to D programmers.
 Walter Bright [designed](https://forum.dlang.org/post/hptdvo$kem$1@digitalmars.com) the language (among other things) to compile quickly 
 (especially [compared to C++](http://www.drdobbs.com/cpp/c-compilation-speed/228701711)), 
 and DMD, the reference D compiler implementation, is itself quite optimized.
