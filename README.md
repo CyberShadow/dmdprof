@@ -7,7 +7,7 @@ It allows profiling and visualizing which parts of the D code take up most of th
 Example
 =======
 
-![](https://dump.thecybershadow.net/3940d9ef43e958cb04dfa441f4af93b2/profile.svg)
+![](https://dump.thecybershadow.net/5d3aa8aecb791fb421d97de09685c7e4/profile.svg)
 
 Click image above for working tooltips and hyperlinks.
 
